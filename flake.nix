@@ -56,6 +56,8 @@
               installPhase = ''
                 mkdir -p $out/bin
                 cp ${binName} $out/bin/${binName}
+                ln -s $out/bin/${binName} $out/bin/d++
+                ln -s $out/bin/${binName} $out/bin/dcc++
                 # Also copy across gdb so that it is avaiable after installation
                 cp "$(which gdb)" $out/bin/gdb
                 cp "$(which valgrind)" $out/bin/valgrind
