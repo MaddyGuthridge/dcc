@@ -19,3 +19,6 @@ debian
 # don't accidentally add random test files to repo
 /*.c
 /*.sh
+
+# Nix build outputs
+result
