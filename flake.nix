@@ -34,6 +34,7 @@
             let
               binName = "dcc";
               cDependencies = with pkgs; [
+                gcc
                 clang
                 python3
                 gdb
@@ -44,13 +45,16 @@
               ];
             in
             pkgs.stdenv.mkDerivation {
-              name = "dcc";
+              name = binName;
               src = self;
               buildInputs = cDependencies;
+              nativeBuildInputs = [ pkgs.makeWrapper ];
               buildPhase = "make";
               installPhase = ''
                 mkdir -p $out/bin
                 cp ${binName} $out/bin/
+                wrapProgram $out/bin/dcc \
+                --prefix PATH : "${pkgs.lib.makeBinPath [ pkgs.gcc pkgs.clang pkgs.python3 pkgs.gdb pkgs.valgrind ]}"
               '';
             };
         }
