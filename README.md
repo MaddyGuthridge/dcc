@@ -289,11 +289,17 @@ int main(void) {
 	sudo curl -L https://github.com/COMP1511UNSW/dcc/releases/latest/download/dcc -o /usr/local/bin/dcc
 	sudo chmod o+rx  /usr/local/bin/dcc
 	```
-	
-	
+
+* NixOS, and systems using the Nix package manager:
+  
+  Permanent installation to `configuration.nix`: 
+  `(builtins.getFlake "github:COMP1511UNSW/dcc?ref=master").packages.x86_64-linux.default`
+  
+  `dcc` inside a development shell:   `nix develop "github:COMP1511UNSW/dcc?ref=master"`
+
 * MacOS
-	Install python3 - see https://docs.python-guide.org/starting/install3/osx/
-	Install gdb - see https://sourceware.org/gdb/wiki/PermissionsDarwin
+	Install `python3` - see https://docs.python-guide.org/starting/install3/osx/
+	Install `gdb` - see https://sourceware.org/gdb/wiki/PermissionsDarwin
 	In your terminal, run:
 	```bash
 	bash <(curl -s https://raw.githubusercontent.com/COMP1511UNSW/dcc/master/install_scripts/macos_install.sh)
@@ -464,4 +470,3 @@ Code for ANSI colors in colors.py is by Giorgos Verigakis
 # License
 
 GPLv3
-
