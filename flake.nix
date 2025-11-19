@@ -30,6 +30,7 @@
       packages = forAllSystems (
         { pkgs }:
         {
+          # dcc
           default =
             let
               binName = "dcc";
@@ -48,15 +49,15 @@
               name = binName;
               src = self;
               buildInputs = cDependencies;
-              nativeBuildInputs = [ pkgs.makeWrapper ];
+              # nativeBuildInputs = [ pkgs.makeWrapper ];
               buildPhase = "make";
               installPhase = ''
                 mkdir -p $out/bin
                 cp ${binName} $out/bin/
-                wrapProgram $out/bin/dcc \
-                --prefix PATH : "${pkgs.lib.makeBinPath [ pkgs.gcc pkgs.clang pkgs.python3 pkgs.gdb pkgs.valgrind ]}"
               '';
             };
+          # gdb required as a runtime dependency for all programs built with dcc
+          gdb = pkgs.gdb;
         }
       );
     };
