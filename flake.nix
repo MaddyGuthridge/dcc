@@ -44,6 +44,7 @@
                 gnumake
                 git
                 zip
+                which
               ];
             in
             pkgs.stdenv.mkDerivation {
@@ -54,7 +55,9 @@
               buildPhase = "make";
               installPhase = ''
                 mkdir -p $out/bin
-                cp ${binName} $out/bin/
+                cp ${binName} $out/bin/${binName}
+                # Also copy across gdb so that it is avaiable after installation
+                cp "$(which gdb)" $out/bin/gdb
               '';
             };
           # gdb required as a runtime dependency for all programs built with dcc
