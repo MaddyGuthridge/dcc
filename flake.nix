@@ -22,16 +22,17 @@
         nixpkgs.lib.genAttrs allSystems (
           system:
           f {
+            system = system;
             pkgs = import nixpkgs { inherit system; };
           }
         );
     in
     {
       packages = forAllSystems (
-        { pkgs }:
+        { pkgs, ... }:
         {
           # dcc
-          dcc =
+          default =
             let
               binName = "dcc";
               cDependencies = with pkgs; [
@@ -58,6 +59,18 @@
             };
           # gdb required as a runtime dependency for all programs built with dcc
           gdb = pkgs.gdb;
+        }
+      );
+
+      devShells = forAllSystems (
+        { system, pkgs }:
+        {
+          default = pkgs.mkShell {
+            packages = [
+              self.packages.${system}.default
+              pkgs.gdb
+            ];
+          };
         }
       );
     };
