@@ -31,7 +31,7 @@
         { pkgs }:
         {
           # dcc
-          default =
+          dcc =
             let
               binName = "dcc";
               cDependencies = with pkgs; [
