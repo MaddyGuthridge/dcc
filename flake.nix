@@ -51,13 +51,15 @@
               name = binName;
               src = self;
               buildInputs = cDependencies;
-              # nativeBuildInputs = [ pkgs.makeWrapper ];
+              nativeBuildInputs = [ pkgs.makeWrapper ];
               buildPhase = "make";
               installPhase = ''
                 mkdir -p $out/bin
                 cp ${binName} $out/bin/${binName}
                 # Also copy across gdb so that it is avaiable after installation
                 cp "$(which gdb)" $out/bin/gdb
+                wrapProgram $out/bin/dcc \
+                  --prefix PATH : "${pkgs.lib.makeBinPath [ pkgs.gcc pkgs.clang pkgs.python3 pkgs.gdb pkgs.valgrind ]}"
               '';
             };
           # gdb required as a runtime dependency for all programs built with dcc
