@@ -62,7 +62,16 @@
                 cp "$(which gdb)" $out/bin/gdb
                 cp "$(which valgrind)" $out/bin/valgrind
                 wrapProgram $out/bin/dcc \
-                  --prefix PATH : "${pkgs.lib.makeBinPath [ pkgs.gcc pkgs.clang pkgs.python3 pkgs.gdb pkgs.valgrind ]}"
+                  --inherit-argv0 \
+                  --prefix PATH : "${
+                    pkgs.lib.makeBinPath [
+                      pkgs.gcc
+                      pkgs.clang
+                      pkgs.python3
+                      pkgs.gdb
+                      pkgs.valgrind
+                    ]
+                  }"
               '';
             };
           # gdb required as a runtime dependency for all programs built with dcc
