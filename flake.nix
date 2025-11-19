@@ -75,6 +75,7 @@
             packages = [
               self.packages.${system}.default
               pkgs.gdb
+              pkgs.valgrind
             ];
           };
         }
