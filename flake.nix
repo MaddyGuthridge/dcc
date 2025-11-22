@@ -58,7 +58,10 @@
                 cp ${binName} $out/bin/${binName}
                 ln -s $out/bin/${binName} $out/bin/d++
                 ln -s $out/bin/${binName} $out/bin/dcc++
-                # Also copy across gdb so that it is avaiable after installation
+                # gdb and valgrind are required as a runtime dependencies for
+                # all programs built with dcc. We need to bring them into the
+                # user's PATH or they'll be unable to run apps built with `dcc`
+                # (unless they install them manually).
                 cp "$(which gdb)" $out/bin/gdb
                 cp "$(which valgrind)" $out/bin/valgrind
                 wrapProgram $out/bin/dcc \
@@ -81,15 +84,7 @@
         { system, pkgs }:
         {
           default = pkgs.mkShell {
-            packages = [
-              self.packages.${system}.default
-              # gdb and valgrind are required as a runtime dependencies for all
-              # programs built with dcc. We need to bring them into the user's
-              # PATH or they'll be unable to run apps built with `dcc` (unless
-              # they install them manually).
-              pkgs.gdb
-              pkgs.valgrind
-            ];
+            packages = [ self.packages.${system}.default ];
           };
         }
       );
