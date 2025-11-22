@@ -74,8 +74,6 @@
                   }"
               '';
             };
-          # gdb required as a runtime dependency for all programs built with dcc
-          gdb = pkgs.gdb;
         }
       );
 
@@ -85,6 +83,10 @@
           default = pkgs.mkShell {
             packages = [
               self.packages.${system}.default
+              # gdb and valgrind are required as a runtime dependencies for all
+              # programs built with dcc. We need to bring them into the user's
+              # PATH or they'll be unable to run apps built with `dcc` (unless
+              # they install them manually).
               pkgs.gdb
               pkgs.valgrind
             ];
