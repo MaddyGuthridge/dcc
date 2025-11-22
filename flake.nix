@@ -2,7 +2,7 @@
   description = "DCC - The Debugging C/C++ Compiler";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
   };
 
   outputs =
